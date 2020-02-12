@@ -1,36 +1,23 @@
-create role application_user;
+ALTER TABLE customer ENABLE ROW LEVEL SECURITY;
 
-grant all on all tables in schema public to application_user;
+GRANT SELECT, UPDATE, DELETE ON TABLE customer TO bob;
+GRANT SELECT, UPDATE, DELETE ON TABLE customer TO alice;
 
-alter table customer enable row level security;
+CREATE POLICY customer_policy
+  ON customer
+USING (first_name = CURRENT_USER);
 
-create policy data_owner
-  on customer
-for all
-to application_user
-using (
-  (
-  select true as bool from (
-    select first_name
-      from customer
-     where first_name = current_user
-    ) as cfn
-  ) = true
-) with check (true);
+create role bob;
+create role alice;
 
 insert into customer values (2, 'bob', 'bob-last');
-
 insert into customer values (3, 'alice', 'alice-last');
-
-create table users (
-  name text not null primary key,
-  role text unique not null
-);
-
-insert into users values ('bob', 'bob');
-insert into users values ('alice', 'alice');
-
 
 set role bob;
 select * from customer;
 
+set role alice;
+select * from customer;
+
+reset role;
+select * from customer;
