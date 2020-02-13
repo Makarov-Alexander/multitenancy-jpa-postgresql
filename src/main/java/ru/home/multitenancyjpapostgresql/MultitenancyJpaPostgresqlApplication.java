@@ -21,7 +21,7 @@ public class MultitenancyJpaPostgresqlApplication {
 	@Bean
 	public CommandLineRunner runner(CustomerRepository repository) {
 		return (args) -> {
-			repository.save(new Customer("Tralin", "Verdik"));
+			repository.save(new Customer("Tralin", "Verdik", "Tomsk"));
 
 			LOGGER.info("All found customers: ");
 			repository.findAll().forEach(c -> LOGGER.info(c.toString()));

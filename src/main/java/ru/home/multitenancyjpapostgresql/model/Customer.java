@@ -20,12 +20,13 @@ public class Customer {
     private String firstName;
     private String lastName;
 
-    @Column(nullable = false, unique = true)
-    private String role
+    @Column(nullable = false, columnDefinition = "varchar(255) default 'Omsk'")
+    private String department;
 
-    public Customer(String firstName, String lastName) {
+    public Customer(String firstName, String lastName, String department) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.department = department;
     }
 
 
