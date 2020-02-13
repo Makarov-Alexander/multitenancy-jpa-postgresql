@@ -18,7 +18,6 @@ public class MultitenancyJpaPostgresqlApplication {
 		SpringApplication.run(MultitenancyJpaPostgresqlApplication.class, args);
 	}
 
-
 	@Bean
 	public CommandLineRunner runner(CustomerRepository repository) {
 		return (args) -> {
