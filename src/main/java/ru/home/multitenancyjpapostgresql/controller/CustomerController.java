@@ -2,20 +2,26 @@ package ru.home.multitenancyjpapostgresql.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.home.multitenancyjpapostgresql.dao.CustomerRepository;
 import ru.home.multitenancyjpapostgresql.model.Customer;
+import ru.home.multitenancyjpapostgresql.service.CustomerService;
 
 @RestController
 public class CustomerController {
 
-    private CustomerRepository repository;
 
-    public CustomerController(CustomerRepository repository) {
-        this.repository = repository;
+    private CustomerService customerService;
+
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
-    @GetMapping("/all")
-    public Iterable<Customer> getCustomer() {
-        return repository.findAll();
+    @GetMapping("/customers/bob")
+    public Iterable<Customer> getBobCustomers() {
+        return customerService.getBobCustomers();
+    }
+
+    @GetMapping("/customers/alice")
+    public Iterable<Customer> getAliceCustomers() {
+        return customerService.getAliceCustomers();
     }
 }
