@@ -7,7 +7,7 @@ import ru.home.multitenancyjpapostgresql.model.Customer;
 
 import java.util.List;
 
-@RepositoryRestResource(collectionResourceRel = "customer", path = "customer")
+@RepositoryRestResource(collectionResourceRel = "customer", path = "user")
 public interface CustomerRestRepository extends PagingAndSortingRepository<Customer, Long> {
     List<Customer> findByFirstName(@Param("name") String name);
 }

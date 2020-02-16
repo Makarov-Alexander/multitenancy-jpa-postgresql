@@ -8,14 +8,7 @@ import ru.home.multitenancyjpapostgresql.model.Customer;
 import java.util.List;
 
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
-    List<Customer> findByLastName(String lastName);
     Customer findById(long id);
-
-    @Modifying
-    @Query(value = "set role bob", nativeQuery = true)
-    void setCurrentBobRole();
-
-    @Modifying
-    @Query(value = "set role alice", nativeQuery = true)
-    void setCurrentAliceRole();
+    List<Customer> findByLastName(String lastName);
+    List<Customer> findByFirstName(String firstName);
 }
