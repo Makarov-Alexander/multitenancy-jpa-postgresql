@@ -1,7 +1,5 @@
 package ru.home.multitenancyjpapostgresql.dao;
 
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import ru.home.multitenancyjpapostgresql.model.Customer;
 

@@ -16,6 +16,21 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+
+    @GetMapping("/customers/{department}?firstname={firstname}")
+    public Iterable<Customer> getBobCustomersByFirstName(
+            @PathVariable("department") String department,
+            @PathVariable("firstname") String firstName) {
+        return customerService.getCustomersByFirstName(department, firstName);
+    }
+
+    @GetMapping("/customers/{department}?lastname={lastname}")
+    public Iterable<Customer> getBobCustomersByLastName(
+            @PathVariable("department") String department,
+            @PathVariable("lastname") String lastName) {
+        return customerService.getCustomersByLastName(department, lastName);
+    }
+
     @GetMapping("/customers/{department}")
     public Iterable<Customer> getBobCustomers(@PathVariable("department") String department) {
         return customerService.getCustomers(department);
