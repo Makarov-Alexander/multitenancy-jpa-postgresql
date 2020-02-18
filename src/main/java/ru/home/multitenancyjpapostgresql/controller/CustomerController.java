@@ -9,7 +9,6 @@ import ru.home.multitenancyjpapostgresql.service.CustomerService;
 @RestController
 public class CustomerController {
 
-
     private CustomerService customerService;
 
     public CustomerController(CustomerService customerService) {

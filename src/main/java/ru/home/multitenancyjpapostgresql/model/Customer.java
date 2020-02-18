@@ -20,7 +20,7 @@ public class Customer {
     private String firstName;
     private String lastName;
 
-    @Column(nullable = false, columnDefinition = "varchar(255) default 'Omsk'")
+    @Column(nullable = false)
     private String department;
 
     public Customer(String firstName, String lastName, String department) {
@@ -28,7 +28,4 @@ public class Customer {
         this.lastName = lastName;
         this.department = department;
     }
-
-
 }
-

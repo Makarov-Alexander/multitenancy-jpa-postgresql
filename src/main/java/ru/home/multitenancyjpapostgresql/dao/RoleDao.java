@@ -9,17 +9,24 @@ import javax.persistence.Query;
 
 @Slf4j
 @Service
-public class SessionDao {
+public class RoleDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public SessionDao(EntityManager entityManager) {
+    public RoleDao(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     public void setRole(String role) {
         Query nativeQuery = entityManager.createNativeQuery("set role " + role);
+        nativeQuery.executeUpdate();
+    }
+
+    public void createRole(String role) {
+        Query nativeQuery = entityManager.createNativeQuery(
+                "create role " + role + ";\n" +
+                "GRANT SELECT, UPDATE, DELETE ON TABLE customer TO " + role);
         nativeQuery.executeUpdate();
     }
 }
