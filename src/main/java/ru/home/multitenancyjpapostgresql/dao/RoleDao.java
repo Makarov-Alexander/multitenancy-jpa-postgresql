@@ -19,13 +19,14 @@ public class RoleDao {
     }
 
     public void setRole(String role) {
-        Query nativeQuery = entityManager.createNativeQuery("set role " + role);
+        Query nativeQuery = entityManager.createNativeQuery("SET ROLE " + role);
         nativeQuery.executeUpdate();
     }
 
     public void createRole(String role) {
         Query nativeQuery = entityManager.createNativeQuery(
-                "create role " + role + ";\n" +
+                "RESET ROLE;\n" +
+                "CREATE ROLE " + role + ";\n" +
                 "GRANT SELECT, UPDATE, DELETE ON TABLE customer TO " + role);
         nativeQuery.executeUpdate();
     }

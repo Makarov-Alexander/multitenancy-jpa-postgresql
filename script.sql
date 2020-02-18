@@ -3,4 +3,4 @@ ALTER TABLE customer ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY customer_policy
   ON customer
-USING (first_name = CURRENT_USER);
+USING (department = CURRENT_USER);
