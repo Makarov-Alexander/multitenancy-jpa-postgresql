@@ -17,23 +17,23 @@ create table customer
 
 ALTER TABLE customer ENABLE ROW LEVEL SECURITY;
 
-GRANT SELECT, UPDATE, DELETE ON TABLE customer TO bob;
-GRANT SELECT, UPDATE, DELETE ON TABLE customer TO alice;
-
 CREATE POLICY customer_policy
   ON customer
-USING (first_name = CURRENT_USER);
+USING (department = CURRENT_USER);
 
-create role bob;
-create role alice;
+create role omsk;
+create role tomsk;
 
-insert into customer values (2, 'bob', 'bob-last');
-insert into customer values (3, 'alice', 'alice-last');
+GRANT SELECT, UPDATE, DELETE ON TABLE customer TO omsk;
+GRANT SELECT, UPDATE, DELETE ON TABLE customer TO tomsk;
 
-set role bob;
+insert into customer values (2, 'omsk', 'bob', 'bob-last');
+insert into customer values (3, 'tomsk', 'alice', 'alice-last');
+
+set role omsk;
 select * from customer;
 
-set role alice;
+set role tomsk;
 select * from customer;
 
 reset role;
