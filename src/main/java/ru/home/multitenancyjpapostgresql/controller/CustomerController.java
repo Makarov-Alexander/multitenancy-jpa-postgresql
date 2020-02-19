@@ -1,9 +1,6 @@
 package ru.home.multitenancyjpapostgresql.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.home.multitenancyjpapostgresql.model.Customer;
 import ru.home.multitenancyjpapostgresql.service.CustomerService;
 
@@ -17,22 +14,12 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/{department}?firstname={firstname}")
-    public Iterable<Customer> getBobCustomersByFirstName(
-            @PathVariable("department") String department,
-            @PathVariable("firstname") String firstName) {
-        return customerService.getCustomersByFirstName(department, firstName);
-    }
-
-    @GetMapping("/{department}?lastname={lastname}")
-    public Iterable<Customer> getBobCustomersByLastName(
-            @PathVariable("department") String department,
-            @PathVariable("lastname") String lastName) {
-        return customerService.getCustomersByLastName(department, lastName);
-    }
-
     @GetMapping("/{department}")
-    public Iterable<Customer> getBobCustomers(@PathVariable("department") String department) {
-        return customerService.getCustomers(department);
+    public Iterable<Customer> getCustomers(
+            @PathVariable("department") String department,
+            @RequestParam(value = "firstname", required = false, defaultValue = "") String firstName,
+            @RequestParam(value = "lastname", required = false, defaultValue = "") String lastName
+    ) {
+        return customerService.getCustomers(department, firstName, lastName);
     }
 }

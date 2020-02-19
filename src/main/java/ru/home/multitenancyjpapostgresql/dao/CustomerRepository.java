@@ -6,7 +6,7 @@ import ru.home.multitenancyjpapostgresql.model.Customer;
 import java.util.List;
 
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
-    Customer findById(long id);
-    List<Customer> findByLastName(String lastName);
     List<Customer> findByFirstName(String firstName);
+    List<Customer> findByLastName(String lastName);
+    List<Customer> findByFirstNameAndLastName(String firstName, String lastName);
 }

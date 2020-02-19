@@ -19,21 +19,25 @@ public class CustomerService {
     }
 
     @Transactional
-    public Iterable<Customer> getCustomers(String department) {
+    public Iterable<Customer> getCustomers(
+            String department,
+            String firstName,
+            String lastName
+    ) {
         sessionDao.setRole(department);
+
+        if (!firstName.isEmpty() && !lastName.isEmpty()) {
+            return repository.findByFirstNameAndLastName(firstName, lastName);
+        }
+
+        if (!firstName.isEmpty()) {
+            return repository.findByFirstName(firstName);
+        }
+
+        if (!lastName.isEmpty()) {
+            return repository.findByLastName(lastName);
+        }
+
         return repository.findAll();
-    }
-
-    @Transactional
-    public Iterable<Customer> getCustomersByFirstName(String department, String firstName) {
-        sessionDao.setRole(department);
-        return repository.findByFirstName(firstName);
-    }
-
-
-    @Transactional
-    public Iterable<Customer> getCustomersByLastName(String department, String lastName) {
-        sessionDao.setRole(department);
-        return repository.findByLastName(lastName);
     }
 }
