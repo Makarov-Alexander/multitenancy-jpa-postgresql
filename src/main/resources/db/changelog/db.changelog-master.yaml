@@ -1,7 +1,7 @@
 databaseChangeLog:
 - changeSet:
     id: 1582163015631-1
-    author: service-admin (generated)
+    author: admin
     changes:
     - createTable:
         columns:
@@ -26,7 +26,7 @@ databaseChangeLog:
         tableName: customer
 - changeSet:
     id: 1582163015631-2
-    author: service-admin (generated)
+    author: admin
     changes:
     - createSequence:
         cacheSize: 1
@@ -37,4 +37,25 @@ databaseChangeLog:
         minValue: 1
         sequenceName: hibernate_sequence
         startValue: 1
-
+- changeSet:
+    id: 1582163015631-3
+    author: admin
+    changes:
+    - sql:
+        comment: Add row policy on Customer
+        dbms: postgesql
+        endDelimiter: \nGO
+        splitStatements: true
+        sql: ALTER TABLE customer ENABLE ROW LEVEL SECURITY;
+        stripComments: true
+- changeSet:
+    id: 1582163015631-4
+    author: admin
+    changes:
+    - sql:
+        comment: Enable row policy on Customer
+        dbms: postgesql
+        endDelimiter: \nGO
+        splitStatements: true
+        sql: CREATE POLICY customer_policy ON customer USING (department = CURRENT_USER);
+        stripComments: true
