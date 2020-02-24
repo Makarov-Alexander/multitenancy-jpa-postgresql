@@ -43,10 +43,9 @@ databaseChangeLog:
     changes:
     - sql:
         comment: Add row policy on Customer
-        dbms: postgesql
-        endDelimiter: \nGO
+        dbms: postgresql
         splitStatements: true
-        sql: ALTER TABLE customer ENABLE ROW LEVEL SECURITY;
+        sql: ALTER TABLE customer ENABLE ROW LEVEL SECURITY
         stripComments: true
 - changeSet:
     id: 1582163015631-4
@@ -54,8 +53,7 @@ databaseChangeLog:
     changes:
     - sql:
         comment: Enable row policy on Customer
-        dbms: postgesql
-        endDelimiter: \nGO
+        dbms: postgresql
         splitStatements: true
-        sql: CREATE POLICY customer_policy ON customer USING (department = CURRENT_USER);
+        sql: CREATE POLICY customer_policy ON customer USING (department = CURRENT_USER)
         stripComments: true
