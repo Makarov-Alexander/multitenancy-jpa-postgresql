@@ -22,8 +22,12 @@ public class MultitenancyApplicationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        roleService.createRole("tomsk");
-        roleService.createRole("omsk");
+        try {
+            roleService.createRole("tomsk");
+            roleService.createRole("omsk");
+        } catch (Exception e) {
+            log.error("Could not create PostgreSQL role", e);
+        }
 
         customerRepository.save(new Customer("Tralin", "Verdik", "tomsk"));
         customerRepository.save(new Customer("Tralin", "Verdik", "tomsk"));

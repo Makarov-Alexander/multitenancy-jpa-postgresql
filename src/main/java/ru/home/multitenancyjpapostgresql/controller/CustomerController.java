@@ -22,4 +22,13 @@ public class CustomerController {
     ) {
         return customerService.getCustomers(department, firstName, lastName);
     }
+
+    @GetMapping("/{department}/{firstname}/{lastname}")
+    public String createCustomer(
+            @PathVariable("department") String department,
+            @PathVariable("firstname") String firstName,
+            @PathVariable("lastname") String lastName
+    ) {
+        return customerService.createCustomer(department, firstName, lastName).toString();
+    }
 }

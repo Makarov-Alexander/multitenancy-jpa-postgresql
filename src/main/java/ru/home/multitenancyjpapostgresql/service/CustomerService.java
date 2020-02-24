@@ -40,4 +40,11 @@ public class CustomerService {
 
         return repository.findAll();
     }
+
+    @Transactional
+    public Customer createCustomer(String department, String firstName, String lastName) {
+        sessionDao.setRole(department);
+        Customer customer = new Customer(firstName, lastName, department);
+        return repository.save(customer);
+    }
 }

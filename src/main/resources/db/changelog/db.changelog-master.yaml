@@ -44,7 +44,6 @@ databaseChangeLog:
     - sql:
         comment: Add row policy on Customer
         dbms: postgresql
-        splitStatements: true
         sql: ALTER TABLE customer ENABLE ROW LEVEL SECURITY
         stripComments: true
 - changeSet:
@@ -54,6 +53,5 @@ databaseChangeLog:
     - sql:
         comment: Enable row policy on Customer
         dbms: postgresql
-        splitStatements: true
         sql: CREATE POLICY customer_policy ON customer USING (department = CURRENT_USER)
         stripComments: true

@@ -27,7 +27,8 @@ public class RoleDao {
         Query nativeQuery = entityManager.createNativeQuery(
                 "RESET ROLE;\n" +
                 "CREATE ROLE " + role + ";\n" +
-                "GRANT SELECT, UPDATE, DELETE ON TABLE customer TO " + role);
+                "GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE customer TO " + role + ";\n" +
+                "GRANT USAGE, SELECT ON SEQUENCE hibernate_sequence TO " + role + ";");
         nativeQuery.executeUpdate();
     }
 }
