@@ -28,7 +28,8 @@ public class RoleDao {
                 "RESET ROLE;\n" +
                 "CREATE ROLE " + role + ";\n" +
                 "GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE customer TO " + role + ";\n" +
-                "GRANT USAGE, SELECT ON SEQUENCE hibernate_sequence TO " + role + ";");
+                "GRANT USAGE, SELECT ON SEQUENCE hibernate_sequence TO " + role + ";\n" +
+                "CREATE TABLE customer_" + role + " PARTITION OF customer FOR VALUES IN (\'" + role + "\');");
         nativeQuery.executeUpdate();
     }
 }
