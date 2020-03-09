@@ -2,20 +2,22 @@ package ru.home.multitenancyjpapostgresql.service;
 
 import org.springframework.stereotype.Service;
 import ru.home.multitenancyjpapostgresql.dao.CustomerRepository;
-import ru.home.multitenancyjpapostgresql.dao.RoleDao;
 import ru.home.multitenancyjpapostgresql.model.Customer;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 @Service
 public class CustomerService {
     private CustomerRepository repository;
+    private EntityManager entityManager;
 
-    private RoleDao sessionDao;
-
-    public CustomerService(CustomerRepository repository, RoleDao sessionDao) {
+    public CustomerService(
+            CustomerRepository repository,
+            EntityManager entityManager) {
         this.repository = repository;
-        this.sessionDao = sessionDao;
+        this.entityManager = entityManager;
     }
 
     @Transactional
@@ -24,7 +26,12 @@ public class CustomerService {
             String firstName,
             String lastName
     ) {
-        sessionDao.setRole(department);
+        entityManager.createNamedQuery("role.set")
+                .setParameter(
+                        "role",
+                        department
+                )
+                .getResultList();
 
         if (!firstName.isEmpty() && !lastName.isEmpty()) {
             return repository.findByFirstNameAndLastName(firstName, lastName);
@@ -43,7 +50,13 @@ public class CustomerService {
 
     @Transactional
     public Customer createCustomer(String department, String firstName, String lastName) {
-        sessionDao.setRole(department);
+        entityManager.createNamedQuery("role.set")
+                .setParameter(
+                        1,
+                        department
+                )
+                .getSingleResult();
+
         Customer customer = new Customer(firstName, lastName, department);
         return repository.save(customer);
     }
