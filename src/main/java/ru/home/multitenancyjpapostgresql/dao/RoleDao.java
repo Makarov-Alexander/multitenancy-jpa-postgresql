@@ -28,8 +28,7 @@ public class RoleDao {
                 String.format(
                     "RESET ROLE;\n" +
                     "CREATE ROLE %1$s;\n" +
-                    "GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE customer TO %1$s;\n" +
-                    "GRANT USAGE, SELECT ON SEQUENCE hibernate_sequence TO %1$s;\n" +
+                    "GRANT %1$s TO customer_none;\n" +
                     "CREATE TABLE customer_%1$s PARTITION OF customer FOR VALUES IN (\'%1$s\');", role));
         nativeQuery.executeUpdate();
     }

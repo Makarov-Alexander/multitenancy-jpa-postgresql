@@ -39,3 +39,39 @@ databaseChangeLog:
             dbms: postgresql
             sql: CREATE POLICY customer_policy ON customer USING (department = CURRENT_USER)
             stripComments: true
+  - changeSet:
+      id: 1582163015631-5
+      author: admin
+      changes:
+      - sql:
+          comment: Create all role
+          dbms: postgresql
+          sql: CREATE ROLE customer_all
+          stripComments: true
+  - changeSet:
+      id: 1582163015631-6
+      author: admin
+      changes:
+      - sql:
+          comment: Grant all role to customer table
+          dbms: postgresql
+          sql: GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE customer TO customer_all
+          stripComments: true
+  - changeSet:
+      id: 1582163015631-7
+      author: admin
+      changes:
+      - sql:
+          comment: Grant all role to sequence
+          dbms: postgresql
+          sql: GRANT USAGE, SELECT ON SEQUENCE hibernate_sequence TO customer_all
+          stripComments: true
+  - changeSet:
+      id: 1582163015631-8
+      author: admin
+      changes:
+      - sql:
+          comment: Create none role
+          dbms: postgresql
+          sql: CREATE ROLE customer_none NOINHERIT LOGIN PASSWORD 'qwe'
+          stripComments: true
