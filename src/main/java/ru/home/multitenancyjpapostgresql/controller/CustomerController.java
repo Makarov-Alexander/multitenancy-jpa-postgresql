@@ -1,8 +1,8 @@
 package ru.home.multitenancyjpapostgresql.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.home.multitenancyjpapostgresql.model.Customer;
-import ru.home.multitenancyjpapostgresql.service.CustomerService;
+import ru.home.multitenancyjpapostgresql.customer.model.Customer;
+import ru.home.multitenancyjpapostgresql.customer.service.CustomerService;
 
 @RestController
 @RequestMapping("/customers")

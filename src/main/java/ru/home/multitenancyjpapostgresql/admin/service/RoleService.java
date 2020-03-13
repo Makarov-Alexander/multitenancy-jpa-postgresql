@@ -1,7 +1,7 @@
-package ru.home.multitenancyjpapostgresql.service;
+package ru.home.multitenancyjpapostgresql.admin.service;
 
 import org.springframework.stereotype.Service;
-import ru.home.multitenancyjpapostgresql.dao.RoleDao;
+import ru.home.multitenancyjpapostgresql.admin.dao.RoleDao;
 
 import javax.transaction.Transactional;
 

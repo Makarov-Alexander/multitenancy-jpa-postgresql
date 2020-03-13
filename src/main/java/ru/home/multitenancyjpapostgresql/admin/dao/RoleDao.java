@@ -1,4 +1,4 @@
-package ru.home.multitenancyjpapostgresql.dao;
+package ru.home.multitenancyjpapostgresql.admin.dao;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

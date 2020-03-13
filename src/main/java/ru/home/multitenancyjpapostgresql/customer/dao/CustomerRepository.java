@@ -1,7 +1,7 @@
-package ru.home.multitenancyjpapostgresql.dao;
+package ru.home.multitenancyjpapostgresql.customer.dao;
 
 import org.springframework.data.repository.CrudRepository;
-import ru.home.multitenancyjpapostgresql.model.Customer;
+import ru.home.multitenancyjpapostgresql.customer.model.Customer;
 
 import java.util.List;
 

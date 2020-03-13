@@ -1,4 +1,4 @@
-package ru.home.multitenancyjpapostgresql.model;
+package ru.home.multitenancyjpapostgresql.customer.model;
 
 import lombok.AccessLevel;
 import lombok.Getter;
