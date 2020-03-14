@@ -1,9 +1,10 @@
 package ru.home.multitenancyjpapostgresql;
 
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,22 +21,31 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "customerEntityManagerFactory",
-        transactionManagerRef = "customerTransactionManager",
+        entityManagerFactoryRef = "entityManagerFactory",
         basePackages = { "ru.home.multitenancyjpapostgresql.customer.dao" }
 )
 public class CustomerDbConfig {
 
-    @Bean(name = "customerDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
+    @Primary
+    @Bean(name = "dataSourceProperties")
+    @ConfigurationProperties("spring.datasource")
+    public DataSourceProperties dataSourceProperties() {
+        return new DataSourceProperties();
     }
 
-    @Bean(name = "customerEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean customerEntityManagerFactory(
+    @Primary
+    @Bean(name = "dataSource")
+    @ConfigurationProperties("spring.datasource.configuration")
+    public DataSource dataSource(@Qualifier("dataSourceProperties") DataSourceProperties dataSourceProperties) {
+        return dataSourceProperties.initializeDataSourceBuilder().type(HikariDataSource.class)
+                .build();
+    }
+
+    @Primary
+    @Bean(name = "entityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             EntityManagerFactoryBuilder builder,
-            @Qualifier("customerDataSource") DataSource dataSource
+            @Qualifier("dataSource") DataSource dataSource
     ) {
         return builder
                 .dataSource(dataSource)
@@ -44,10 +54,11 @@ public class CustomerDbConfig {
                 .build();
     }
 
-    @Bean(name = "customerTransactionManager")
+    @Primary
+    @Bean(name = "transactionManager")
     public PlatformTransactionManager customerTransactionManager(
-            @Qualifier("customerEntityManagerFactory") EntityManagerFactory customerEntityManagerFactory
+            @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory
     ) {
-        return new JpaTransactionManager(customerEntityManagerFactory);
+        return new JpaTransactionManager(entityManagerFactory);
     }
 }

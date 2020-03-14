@@ -1,13 +1,13 @@
 package ru.home.multitenancyjpapostgresql;
 
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -20,23 +20,31 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "entityManagerFactory",
+        entityManagerFactoryRef = "adminEntityManagerFactory",
+        transactionManagerRef = "adminTransactionManager",
         basePackages = { "ru.home.multitenancyjpapostgresql.admin.dao" }
 )
 public class AdminDbConfig {
 
-    @Primary
-    @Bean(name = "dataSource")
-    @ConfigurationProperties(prefix = "admin.datasource")
-    public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
+    @Bean(name = "adminDataSourceProperties")
+    @ConfigurationProperties("admin.datasource")
+    public DataSourceProperties dataSourceProperties() {
+        return new DataSourceProperties();
     }
 
-    @Primary
-    @Bean(name = "entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+    @Bean(name = "adminDataSource")
+    @ConfigurationProperties("admin.datasource.configuration")
+    public DataSource dataSource(
+            @Qualifier("adminDataSourceProperties") DataSourceProperties adminDataSourceProperties
+    ) {
+        return adminDataSourceProperties.initializeDataSourceBuilder().type(HikariDataSource.class)
+                .build();
+    }
+
+    @Bean(name = "adminEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean adminEntityManagerFactory(
             EntityManagerFactoryBuilder builder,
-            @Qualifier("dataSource") DataSource dataSource
+            @Qualifier("adminDataSource") DataSource dataSource
     ) {
         return builder
                 .dataSource(dataSource)
@@ -45,11 +53,10 @@ public class AdminDbConfig {
                 .build();
     }
 
-    @Primary
-    @Bean(name = "transactionManager")
+    @Bean(name = "adminTransactionManager")
     public PlatformTransactionManager transactionManager(
-            @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory
+            @Qualifier("adminEntityManagerFactory") EntityManagerFactory adminEntityManagerFactory
     ) {
-        return new JpaTransactionManager(entityManagerFactory);
+        return new JpaTransactionManager(adminEntityManagerFactory);
     }
 }
