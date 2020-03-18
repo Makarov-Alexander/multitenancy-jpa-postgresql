@@ -5,21 +5,20 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import ru.home.multitenancyjpapostgresql.admin.service.RoleService;
-import ru.home.multitenancyjpapostgresql.customer.dao.CustomerRepository;
-import ru.home.multitenancyjpapostgresql.customer.model.Customer;
+import ru.home.multitenancyjpapostgresql.customer.service.CustomerService;
 
 @Slf4j
 @Component
 public class MultitenancyApplicationRunner implements ApplicationRunner {
 
-    private CustomerRepository customerRepository;
     private RoleService roleService;
+    private CustomerService customerService;
 
     public MultitenancyApplicationRunner(
-            CustomerRepository customerRepository,
-            RoleService roleService) {
-        this.customerRepository = customerRepository;
+            RoleService roleService,
+            CustomerService customerService) {
         this.roleService = roleService;
+        this.customerService = customerService;
     }
 
     @Override
@@ -31,14 +30,14 @@ public class MultitenancyApplicationRunner implements ApplicationRunner {
             LOGGER.error("Could not create PostgreSQL role", e);
         }
 
-        customerRepository.save(new Customer("Tralin", "Verdik", "tomsk"));
-        customerRepository.save(new Customer("Tralin", "Verdik", "tomsk"));
-        customerRepository.save(new Customer("Tralin", "Verdik", "tomsk"));
-        customerRepository.save(new Customer("Bralin", "Gerdik", "omsk"));
-        customerRepository.save(new Customer("Bralin", "Gerdik", "omsk"));
-        customerRepository.save(new Customer("Bralin", "Gerdik", "omsk"));
+        customerService.createCustomer("tomsk", "Tralin", "Verdik");
+        customerService.createCustomer("tomsk", "Tralin", "Verdik");
+        customerService.createCustomer("tomsk", "Tralin", "Verdik");
+        customerService.createCustomer("omsk", "Bralin", "Gerdik");
+        customerService.createCustomer("omsk", "Bralin", "Gerdik");
+        customerService.createCustomer("omsk", "Bralin", "Gerdik");
 
         LOGGER.info("All found customers: ");
-        customerRepository.findAll().forEach(c -> LOGGER.info(c.toString()));
+        customerService.getCustomers("", "", "").forEach(c -> LOGGER.info(c.toString()));
     }
 }

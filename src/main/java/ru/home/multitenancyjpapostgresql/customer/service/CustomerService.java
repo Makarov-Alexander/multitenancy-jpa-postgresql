@@ -2,7 +2,7 @@ package ru.home.multitenancyjpapostgresql.customer.service;
 
 import org.springframework.stereotype.Service;
 import ru.home.multitenancyjpapostgresql.customer.dao.CustomerRepository;
-import ru.home.multitenancyjpapostgresql.admin.dao.RoleDao;
+import ru.home.multitenancyjpapostgresql.customer.dao.RoleDao;
 import ru.home.multitenancyjpapostgresql.customer.model.Customer;
 
 import javax.transaction.Transactional;

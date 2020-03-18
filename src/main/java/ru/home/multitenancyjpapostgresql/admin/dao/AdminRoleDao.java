@@ -1,33 +1,22 @@
 package ru.home.multitenancyjpapostgresql.admin.dao;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.Map;
 
 @Slf4j
 @Service
-public class RoleDao {
+public class AdminRoleDao {
 
-    @PersistenceContext(unitName = "admin")
     private EntityManager entityManager;
 
-    public RoleDao(
-            @Qualifier("adminEntityManagerFactory") EntityManagerFactory adminEntityManagerFactory
-    ) {
-        this.entityManager = adminEntityManagerFactory.createEntityManager();
-        Map<String, Object> properties = adminEntityManagerFactory.getProperties();
-        properties.forEach((s, o) -> System.out.printf("+++ %s: %s\n", s, o.toString()));
-    }
-
-    public void setRole(String role) {
-        Query nativeQuery = entityManager.createNativeQuery("SET ROLE " + role);
-        nativeQuery.executeUpdate();
+    @Autowired
+    public AdminRoleDao(@Qualifier("adminEntityManagerFactory") EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     public void createRole(String role) {

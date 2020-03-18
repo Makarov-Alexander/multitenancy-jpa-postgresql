@@ -42,7 +42,7 @@ public class AdminDbConfig {
     }
 
     @Bean(name = "adminEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean adminEntityManagerFactory(
+    public LocalContainerEntityManagerFactoryBean LocalContainerEntityManagerFactoryBean(
             EntityManagerFactoryBuilder builder,
             @Qualifier("adminDataSource") DataSource dataSource
     ) {
