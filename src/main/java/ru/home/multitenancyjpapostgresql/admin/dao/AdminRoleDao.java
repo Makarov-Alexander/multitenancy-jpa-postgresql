@@ -14,7 +14,6 @@ public class AdminRoleDao {
 
     private EntityManager entityManager;
 
-    @Autowired
     public AdminRoleDao(@Qualifier("adminEntityManagerFactory") EntityManager entityManager) {
         this.entityManager = entityManager;
     }
@@ -28,5 +27,4 @@ public class AdminRoleDao {
                     "CREATE TABLE customer_%1$s PARTITION OF customer FOR VALUES IN (\'%1$s\');", role));
         nativeQuery.executeUpdate();
     }
-
 }

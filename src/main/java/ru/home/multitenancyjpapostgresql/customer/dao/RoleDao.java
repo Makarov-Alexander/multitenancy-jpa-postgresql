@@ -14,7 +14,6 @@ public class RoleDao {
 
     private EntityManager entityManager;
 
-    @Autowired
     public RoleDao(@Qualifier("entityManagerFactory") EntityManager entityManager) {
         this.entityManager = entityManager;
     }

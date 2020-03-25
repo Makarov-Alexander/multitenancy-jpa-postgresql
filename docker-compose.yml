@@ -4,10 +4,15 @@ services:
     image: multitenancy-jpa-postgresql
     build:
       context: .
+    environment:
+      SPRING_APPLICATION_JSON: '{
+            "spring.datasource.url": "jdbc:postgresql://postgres:5432/multitenancy?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC",
+            "admin.datasource.url": "jdbc:postgresql://postgres:5432/multitenancy?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC"
+          }'
     depends_on:
     - postgres
     ports:
-    - "8081:8080"
+    - "8080:8080"
   postgres:
     image: postgres
     environment:
@@ -15,4 +20,4 @@ services:
     - POSTGRES_USER=postgres
     - POSTGRES_PASSWORD=postgres
     ports:
-    - "5433:5432"
+    - "5432:5432"
