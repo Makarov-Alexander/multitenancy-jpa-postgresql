@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.home.multitenancyjpapostgresql.admin.service.RoleService;
 
 @RestController
-@RequestMapping("/createrole")
+@RequestMapping("/departments")
 public class RoleController {
 
     private RoleService roleService;
@@ -16,7 +16,7 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/create/{name}")
     public String createRole(@PathVariable String name) {
         roleService.createRole(name);
         return "Role " + name + " created.";

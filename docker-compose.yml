@@ -4,6 +4,7 @@ services:
     image: multitenancy-jpa-postgresql
     build:
       context: .
+    command: sh -c 'while ! echo exit | nc postgres 5432; do sleep 1; done; exec java -jar multitenancy.jar'
     environment:
       SPRING_APPLICATION_JSON: '{
             "spring.datasource.url": "jdbc:postgresql://postgres:5432/multitenancy?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC",

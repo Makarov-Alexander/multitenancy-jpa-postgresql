@@ -11,4 +11,4 @@ FROM openjdk:8-jre-alpine as runner
 COPY --from=builder /target/multitenancy-jpa-postgresql-*.jar multitenancy.jar
 
 EXPOSE 8080
-ENTRYPOINT exec java -jar multitenancy.jar
+CMD exec java -jar multitenancy.jar
