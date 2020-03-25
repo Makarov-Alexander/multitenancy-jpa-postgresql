@@ -8,11 +8,11 @@ import ru.home.multitenancyjpapostgresql.admin.service.RoleService;
 
 @RestController
 @RequestMapping("/departments")
-public class RoleController {
+public class DepartmentController {
 
     private RoleService roleService;
 
-    public RoleController(RoleService roleService) {
+    public DepartmentController(RoleService roleService) {
         this.roleService = roleService;
     }
 

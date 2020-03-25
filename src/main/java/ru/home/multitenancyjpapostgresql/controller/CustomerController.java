@@ -23,7 +23,7 @@ public class CustomerController {
         return customerService.getCustomers(department, firstName, lastName);
     }
 
-    @GetMapping("/{department}/{firstname}/{lastname}")
+    @GetMapping("/create/{department}/{firstname}/{lastname}")
     public String createCustomer(
             @PathVariable("department") String department,
             @PathVariable("firstname") String firstName,
