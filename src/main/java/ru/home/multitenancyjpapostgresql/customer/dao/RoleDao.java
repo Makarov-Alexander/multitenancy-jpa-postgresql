@@ -23,5 +23,4 @@ public class RoleDao {
         Query nativeQuery = entityManager.createNativeQuery("SET ROLE " + role);
         nativeQuery.executeUpdate();
     }
-
 }

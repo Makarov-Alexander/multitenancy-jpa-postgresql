@@ -27,7 +27,7 @@ public class MultitenancyApplicationRunner implements ApplicationRunner {
             roleService.createRole("tomsk");
             roleService.createRole("omsk");
         } catch (Exception e) {
-            LOGGER.error("Could not create PostgreSQL role", e);
+            LOGGER.error("Could not create PostgreSQL role {}", e.getClass(), e);
         }
 
         customerService.createCustomer("tomsk", "Tralin", "Verdik");
@@ -38,6 +38,7 @@ public class MultitenancyApplicationRunner implements ApplicationRunner {
         customerService.createCustomer("omsk", "Bralin", "Gerdik");
 
         LOGGER.info("All found customers: ");
-        customerService.getCustomers("", "", "").forEach(c -> LOGGER.info(c.toString()));
+        customerService.getCustomers("tomsk", "", "").forEach(c -> LOGGER.info(c.toString()));
+        customerService.getCustomers("omsk", "", "").forEach(c -> LOGGER.info(c.toString()));
     }
 }

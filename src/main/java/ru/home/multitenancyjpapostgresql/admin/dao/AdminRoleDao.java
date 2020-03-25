@@ -20,12 +20,10 @@ public class AdminRoleDao {
     }
 
     public void createRole(String role) {
-        System.out.println("+++ CURRENT_USER: " +
-                entityManager.createNativeQuery("select current_user").getSingleResult().toString());
-
         Query nativeQuery = entityManager.createNativeQuery(
                 String.format(
                     "CREATE ROLE %1$s;\n" +
+                    "GRANT customer_all TO %1$s;\n" +
                     "GRANT %1$s TO customer_none;\n" +
                     "CREATE TABLE customer_%1$s PARTITION OF customer FOR VALUES IN (\'%1$s\');", role));
         nativeQuery.executeUpdate();

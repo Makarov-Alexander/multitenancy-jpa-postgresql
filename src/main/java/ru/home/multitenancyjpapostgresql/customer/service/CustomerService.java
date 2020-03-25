@@ -1,11 +1,13 @@
 package ru.home.multitenancyjpapostgresql.customer.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.home.multitenancyjpapostgresql.customer.dao.CustomerRepository;
 import ru.home.multitenancyjpapostgresql.customer.dao.RoleDao;
 import ru.home.multitenancyjpapostgresql.customer.model.Customer;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 
 @Service
 public class CustomerService {
@@ -24,6 +26,10 @@ public class CustomerService {
             String firstName,
             String lastName
     ) {
+        if (StringUtils.isEmpty(department)) {
+            return Collections.EMPTY_LIST;
+        }
+
         sessionDao.setRole(department);
 
         if (!firstName.isEmpty() && !lastName.isEmpty()) {
